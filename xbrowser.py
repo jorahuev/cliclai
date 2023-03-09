@@ -1,15 +1,16 @@
 import undetected_chromedriver as uc
 import time
 
-def run_browser(url):
-    options = uc.ChromeOptions()
-    #options.add_argument('--headless')
-    #options.add_argument('--remote-debugging-port=9222')
-    driver = uc.Chrome(options=options)
+class XBrowser:
 
-    # Navigate to the specified URL
-    driver.get(url)
-    time.sleep(20)
+    def __init__(self):
+        options = uc.ChromeOptions()
+        options.add_argument("--disable-blink-features=AutomationControlled")
+        self.driver = uc.Chrome(options=options)
 
-    # Return the driver object
-    return driver
+    def __del__(self):
+        self.driver.quit()
+
+    def get(self, url):
+        self.driver.get(url)
+        time.sleep(10)
